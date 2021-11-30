@@ -13,11 +13,38 @@ console.log(myName)
 //3
 //написать функцию которая будет принимать входным параметром массив
 //и переставит в нем елементы так что в начале массива будут только цифры а в конце только строки
-//
-function sortTheArray(someArray){
-    let newArray = someArray.sort()
-    console.log(newArray)
-    let sortedArray = newArray.sort((a, b) => a-b)
-    console.log(sortedArray)
+// let arr =[2, 6, 7, "a", "b", "q"]
+const array = ['b', 6, 'a', 'q', 7, 2]
+
+function sortTheArray(array) {
+    if (array.length <= 2){
+        return array
+    }
+    let index = 2
+    const currentItem = array[index]
+
+    const more = []
+    const less = []
+
+    for (let i = 0; i < array.length; i++){
+        if (i === index){
+            continue
+        }
+
+        if (array[i] > currentItem){
+            more.push(array[i])
+        }
+
+        else {
+            less.push(array[i])
+        }
+    }
+    return [
+        ...sortTheArray(less),
+        currentItem,
+        ...sortTheArray(more)
+    ]
 }
-sortTheArray(["b", 6, "a", "q", 7, 2, 15, 25, 'Oleg', 'Petro'])
+
+console.log(sortTheArray(array))
+
