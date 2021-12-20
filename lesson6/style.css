@@ -1,0 +1,11 @@
+.users__specifications{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 20px;
+}
+
+.users td{
+    width: 100%;
+    border: 2px solid #000;
+}
