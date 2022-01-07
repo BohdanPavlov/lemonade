@@ -140,31 +140,75 @@
 
 //0-empty,1 - x,2 - o
 let cells = document.querySelectorAll('#field td');
+start(cells)
 
-function initGame(){
-    for(let i=0;i<cells.length;i++){
-        let className = (i%2===0)?'active-cross':'active-zero'
-        cells[i].addEventListener('click',(e)=>handleEvent(e.target,className))
+function start(cells){
+    let i = 0
+
+    for (let cell of cells){
+        cell.addEventListener('click', function step() {
+            if (this.innerHTML === ''){
+                this.innerHTML = ['X', 'O'][i % 2]
+            }
+            this.removeEventListener('click', step)
+
+            if (isVictory(cells)){
+                alert(`Победил игрок ${this.innerHTML}! Поздравляем!`)
+            } else if (i === 8){
+                alert(`Draw!`)
+            }
+            i++
+        })
     }
 }
 
-function handleEvent(elem,className) {
-    if (elem.tagName === 'TD' && elem.dataset.check !== 'checked') {
-        elem.classList.add(className)
-        elem.dataset.check='checked'
-        checkWin()
+function isVictory(cells){
+    let combs = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+    ]
+
+    for (let comb of combs){
+        if (cells[comb[0]].innerHTML === cells[comb[1]].innerHTML &&
+            cells[comb[1]].innerHTML === cells[comb[2]].innerHTML &&
+            cells[comb[0]].innerHTML !== ''
+        ){
+            return true
+        }
     }
+    return false
 }
 
-function checkWin(){
-    let cells = document.querySelectorAll('#field td');
-    for(let i=0;i<schema.length;i++){
-//         1)includes
-//         2)filter
-//         3)for&for
-    }
-}
-
-const schema = [[0,1,2],[0,3,6]]
-
-initGame()
+// function initGame(){
+//     for(let i=0;i<cells.length;i++){
+//         let className = (i%2===0)?'active-cross':'active-zero'
+//         cells[i].addEventListener('click',(e)=>handleEvent(e.target,className))
+//     }
+// }
+//
+// function handleEvent(elem,className) {
+//     if (elem.tagName === 'TD' && elem.dataset.check !== 'checked') {
+//         elem.classList.add(className)
+//         elem.dataset.check='checked'
+//         checkWin()
+//     }
+// }
+//
+// function checkWin(){
+//     let cells = document.querySelectorAll('#field td');
+//     for(let i=0;i<schema.length;i++){
+// //         1)includes
+// //         2)filter
+// //         3)for&for
+//     }
+// }
+//
+// const schema = [[0,1,2],[0,3,6]]
+//
+// initGame()
